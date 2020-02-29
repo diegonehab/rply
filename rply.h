@@ -13,8 +13,8 @@
 extern "C" {
 #endif
 
-#define RPLY_VERSION   "RPly 1.1.2"
-#define RPLY_COPYRIGHT "Copyright (C) 2003-2012 Diego Nehab"
+#define RPLY_VERSION   "RPly 1.1.3"
+#define RPLY_COPYRIGHT "Copyright (C) 2003-2013 Diego Nehab"
 #define RPLY_AUTHORS   "Diego Nehab"
 
 /* ----------------------------------------------------------------------
