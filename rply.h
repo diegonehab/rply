@@ -13,6 +13,10 @@
 extern "C" {
 #endif
 
+#define RPLY_VERSION   "RPly 1.01"
+#define RPLY_COPYRIGHT "Copyright (C) 2003-2005 Diego Nehab"
+#define RPLY_AUTHORS   "Diego Nehab"
+
 /* ----------------------------------------------------------------------
  * Types
  * ---------------------------------------------------------------------- */
@@ -338,7 +342,7 @@ int ply_close(p_ply ply);
 #endif /* RPLY_H */
 
 /* ----------------------------------------------------------------------
- * Copyright (C) 2003 Diego Nehab.  All rights reserved.
+ * Copyright (C) 2003-2005 Diego Nehab. All rights reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the

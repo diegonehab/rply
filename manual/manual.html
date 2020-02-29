@@ -2,7 +2,8 @@
 
 <head>
 <meta name="description" content="The RPly Homepage">
-<meta name="keywords" content="open source, C, Library, PLY, file format, input, output">
+<meta name="keywords" content="open source, C, Library, PLY, file format,
+input, output, tools">
 <title>
 RPly: ANSI C library for PLY file format input and output
 </title>
@@ -34,47 +35,62 @@ RPly: ANSI C library for PLY file format input and output
 
 <p>RPly is a library that lets applications read and write PLY files.  The
 PLY file format is widely used to store geometric information, such as 3D
-models, but is general enough to be useful for other purposes.  There are
-other libraries out there, of course, but I decided to write my own. I
-tried to write it in such a way that in other incarnations I won't have to
-do it again. Everything that made me unhappy about the
-existing libraries was eliminated from RPly.</p>
+models, but is general enough to be useful for other purposes.  
+</p>
+
+<p>There are other libraries out there, of course. I tried using them and
+finally decided to write my own. I tried to write it in such a way that
+others won't have to do it again and again. Everything that made me unhappy
+about the existing libraries was eliminated from RPly.</p>
 
 <p>RPly is easy to use, well documented, small, free,
-open-source, ANSI C, efficient, well tested and I will keep supporting it
-for a while. The highlights are: </p>
+open-source, ANSI C, efficient, and well tested. I will keep supporting it
+for a while because all my tools use the library for input/output. The highlights are: </p>
 <ul>
 <li> A callback mechanism that makes PLY file input straightforward; 
-<li> RPly supports the full range of numeric formats, 
-but the user only has to deal with doubles;
-<li> Binary (big and little endian) and text mode are fully supported;
+<li> Support for the full range of numeric formats though the user only 
+deals with doubles;
+<li> Binary (big and little endian) and text modes are fully supported;
 <li> Input and output are buffered for efficiency;
 <li> Available under the 
 <a href=http://www.opensource.org/licenses/mit-license.html>MIT license</a> 
 for added freedom.
 </ul>
 
-<p> Since the PLY file format doesn't have a formal specification approved
-by a committee, there are different flavors of PLY files out there. It is
-impossible to support all of them, because there is no documentation for
-all of them. Whatever documentation was found was used to create RPly
-(specifically, RPly supports <tt>obj_info</tt>, although it's a pointless
-extension to the format). In theory, since RPly doesn't try to interpret
-the meaning of the data in a file, it should be able to read any PLY file. In practice, this means the library works with all PLY files that were available for testing. </p>
+<p>
+The format was developed at <a
+href=http://graphics.stanford.edu/data/3Dscanrep/>Stanford University</a> 
+for use with their 3D scanning projects. Greg Turk's PLY library, available
+from <a href=http://www.cc.gatech.edu/projects/large_models>
+Georgia Institute of Technology</a>, seems to be the standard reference
+to the PLY file format, although there are some variations out there. 
+</p>
+
+<p> Whatever documentation and examples were found, were taken into
+consideration to create RPly. In theory, since RPly doesn't try to interpret
+the meaning of the data in a PLY file, it should be able to read any PLY file.
+In practice, the library works with all PLY files that I could find.  </p>
 
 <h2>Download</h2>
 
 <p>
-Version 1.0 of RPly is complete and available for download in source
-code from <a href=rply-1.0.tar.gz>this link</a>. Examples and documentation 
+Version 1.01 of RPly is available for download in source
+code from <a href=rply-1.01.tar.gz>this link</a>. Examples and documentation 
 are packed inside the tar ball. Have fun!
 </p>
 
 <p>
-Copyright &copy; 2003-2004 Diego Nehab. All rights reserved. <br>
+Copyright &copy; 2003-2005 Diego Nehab. All rights reserved. <br>
 Author: <A href="http://www.cs.princeton.edu/~diego">Diego Nehab</a>
 </p>
 
+<h2>What's new?</h2>
+
+<p>
+The change for version 1.01 is the use of our own buffering code when
+reading ASCII files. Speedup factor of 5 in Linux, almost no change in
+Windows.
+</p>
 
 <h2> RPly's idea of what a PLY file is </h2>
 
