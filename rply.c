@@ -403,7 +403,7 @@ int ply_read_header(p_ply ply) {
         return 0;
     }
     /* parse elements, comments or obj_infos until the end of header */
-    while (strcmp(BWORD(ply), "end_header")) {
+    while (strncmp(BWORD(ply), "end_header", 10) != 0) {
         if (!ply_read_header_comment(ply) &&
                 !ply_read_header_element(ply) &&
                 !ply_read_header_obj_info(ply)) {
@@ -909,8 +909,10 @@ static int ply_read_element(p_ply ply, p_ply_element element,
 static int ply_find_string(const char *item, const char* const list[]) {
     int i;
     assert(item && list);
-    for (i = 0; list[i]; i++)
-        if (!strcmp(list[i], item)) return i;
+    for (i = 0; list[i]; i++) {
+        unsigned long itemlen = strlen(list[i]);
+        if (!strncmp(list[i], item, itemlen)) return i;
+    }
     return -1;
 }
 
@@ -922,8 +924,10 @@ static p_ply_element ply_find_element(p_ply ply, const char *name) {
     nelements = ply->nelements;
     assert(element || nelements == 0);
     assert(!element || nelements > 0);
-    for (i = 0; i < nelements; i++)
-        if (!strcmp(element[i].name, name)) return &element[i];
+    for (i = 0; i < nelements; i++) {
+        unsigned long namelen = strlen(element[i].name);
+        if (!strncmp(element[i].name, name, namelen)) return &element[i];
+    }
     return NULL;
 }
 
@@ -936,8 +940,10 @@ static p_ply_property ply_find_property(p_ply_element element,
     nproperties = element->nproperties;
     assert(property || nproperties == 0);
     assert(!property || nproperties > 0);
-    for (i = 0; i < nproperties; i++)
-        if (!strcmp(property[i].name, name)) return &property[i];
+    for (i = 0; i < nproperties; i++) {
+        unsigned long namelen = strlen(property[i].name);
+        if (!strncmp(property[i].name, name, namelen)) return &property[i];
+    }
     return NULL;
 }
 
@@ -1193,7 +1199,7 @@ static p_ply_property ply_grow_property(p_ply ply, p_ply_element element) {
 
 static int ply_read_header_format(p_ply ply) {
     assert(ply && ply->fp && ply->io_mode == PLY_READ);
-    if (strcmp(BWORD(ply), "format")) return 0;
+    if (strncmp(BWORD(ply), "format", 6) != 0) return 0;
     if (!ply_read_word(ply)) return 0;
     ply->storage_mode = ply_find_string(BWORD(ply), ply_storage_mode_list);
     if (ply->storage_mode == (e_ply_storage_mode) (-1)) return 0;
@@ -1202,14 +1208,14 @@ static int ply_read_header_format(p_ply ply) {
         ply->idriver = &ply_idriver_binary;
     else ply->idriver = &ply_idriver_binary_reverse;
     if (!ply_read_word(ply)) return 0;
-    if (strcmp(BWORD(ply), "1.0")) return 0;
+    if (strncmp(BWORD(ply), "1.0", 3) != 0) return 0;
     if (!ply_read_word(ply)) return 0;
     return 1;
 }
 
 static int ply_read_header_comment(p_ply ply) {
     assert(ply && ply->fp && ply->io_mode == PLY_READ);
-    if (strcmp(BWORD(ply), "comment")) return 0;
+    if (strncmp(BWORD(ply), "comment", 7) != 0) return 0;
     if (!ply_read_line(ply)) return 0;
     if (!ply_add_comment(ply, BLINE(ply))) return 0;
     if (!ply_read_word(ply)) return 0;
@@ -1218,7 +1224,7 @@ static int ply_read_header_comment(p_ply ply) {
 
 static int ply_read_header_obj_info(p_ply ply) {
     assert(ply && ply->fp && ply->io_mode == PLY_READ);
-    if (strcmp(BWORD(ply), "obj_info")) return 0;
+    if (strncmp(BWORD(ply), "obj_info", 8) != 0) return 0;
     if (!ply_read_line(ply)) return 0;
     if (!ply_add_obj_info(ply, BLINE(ply))) return 0;
     if (!ply_read_word(ply)) return 0;
@@ -1229,7 +1235,7 @@ static int ply_read_header_property(p_ply ply) {
     p_ply_element element = NULL;
     p_ply_property property = NULL;
     /* make sure it is a property */
-    if (strcmp(BWORD(ply), "property")) return 0;
+    if (strncmp(BWORD(ply), "property", 8) != 0) return 0;
     element = &ply->element[ply->nelements-1];
     property = ply_grow_property(ply, element);
     if (!property) return 0;
@@ -1257,7 +1263,7 @@ static int ply_read_header_element(p_ply ply) {
     p_ply_element element = NULL;
     long dummy;
     assert(ply && ply->fp && ply->io_mode == PLY_READ);
-    if (strcmp(BWORD(ply), "element")) return 0;
+    if (strncmp(BWORD(ply), "element", 7) != 0) return 0;
     /* allocate room for new element */
     element = ply_grow_element(ply);
     if (!element) return 0;
