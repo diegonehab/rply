@@ -1241,10 +1241,12 @@ static int ply_read_header_property(p_ply ply) {
         /* if it's a list, we need the base types */
         if (!ply_read_word(ply)) return 0;
         property->length_type = ply_find_string(BWORD(ply), ply_type_list);
-        if (property->length_type == (e_ply_type) (-1)) return 0;
+        if (property->length_type == (e_ply_type) (-1) ||
+            property->length_type >= PLY_LIST) return 0;
         if (!ply_read_word(ply)) return 0;
         property->value_type = ply_find_string(BWORD(ply), ply_type_list);
-        if (property->value_type == (e_ply_type) (-1)) return 0;
+        if (property->value_type == (e_ply_type) (-1) ||
+            property->value_type >= PLY_LIST)  return 0;
     }
     /* get property name */
     if (!ply_read_word(ply)) return 0;
